@@ -1,7 +1,7 @@
 {
   "name": "arpeggio-datastore",
   "version": "0.0.1",
-  "description": "extremely opinionated ORM/ODM",
+  "description": "Arpeggio adapter for Google Cloud Datastore",
   "main": "lib/adapter.js",
   "repository": {
     "type": "git",
