@@ -1,0 +1,35 @@
+{
+  "name": "arpeggio-datastore",
+  "version": "0.0.1",
+  "description": "extremely opinionated ORM/ODM",
+  "main": "lib/adapter.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nateupstairs/arpeggio"
+  },
+  "scripts": {
+    "build": "babel src -d lib",
+    "lint": "eslint .",
+    "init": "$(gcloud beta emulators datastore env-init)",
+    "storage": "gcloud beta emulators datastore start"
+  },
+  "engines": {
+    "node": "6.6.0",
+    "npm": "3.10.3"
+  },
+  "author": "nateupstairs",
+  "license": "ISC",
+  "dependencies": {
+    "google-cloud": "^0.41.2",
+    "lodash": "^3.10.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-eslint": "^4.1.3",
+    "babel-polyfill": "^6.3.14",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "babel-register": "^6.3.13",
+    "eslint": "^1.7.3"
+  }
+}
