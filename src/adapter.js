@@ -27,6 +27,19 @@ export class Adapter {
     return key.id
   }
 
+  mapIds(models) {
+    let map = {}
+
+    models.forEach(m => {
+      map[m.key.id] = m
+    })
+    return map
+  }
+
+  byId(map, id) {
+    return map[id]
+  }
+
   async create(type, path = null, data) {
     return new Promise((resolve, reject) => {
       let key
@@ -69,7 +82,7 @@ export class Adapter {
           key = this.datastore.key(readArgs)
         }
         else {
-          key = this.datastore.key(type, readArgs)
+          key = this.datastore.key([type, readArgs])
         }
       }
       catch (err) {
@@ -81,6 +94,38 @@ export class Adapter {
           return reject(err)
         }
         return resolve(entity)
+      })
+    })
+  }
+
+  async readMany(type, args) {
+    let readArgs = args[0]
+
+    return new Promise((resolve, reject) => {
+      let keys = []
+
+      try {
+        readArgs.forEach(ra => {
+          let key
+
+          if (_.isArray(ra)) {
+            key = this.datastore.key(ra)
+          }
+          else {
+            key = this.datastore.key([type, ra])
+          }
+          keys.push(key)
+        })
+      }
+      catch (err) {
+        return reject(err)
+      }
+
+      this.datastore.get(keys, (err, entities) => {
+        if (err) {
+          return reject(err)
+        }
+        return resolve(entities)
       })
     })
   }
@@ -128,6 +173,38 @@ export class Adapter {
     })
   }
 
+  async destroyMany(type, args) {
+    let readArgs = args
+
+    return new Promise((resolve, reject) => {
+      let keys = []
+
+      try {
+        readArgs.forEach(ra => {
+          let key
+
+          if (_.isArray(ra)) {
+            key = this.datastore.key(ra)
+          }
+          else {
+            key = this.datastore.key([type, ra])
+          }
+          keys.push(key)
+        })
+      }
+      catch (err) {
+        return reject(err)
+      }
+
+      this.datastore.delete(keys, (err, entities) => {
+        if (err) {
+          return reject(err)
+        }
+        return resolve(entities)
+      })
+    })
+  }
+
   async query(args) {
     let builtQuery = args[0]
 
@@ -150,7 +227,7 @@ export class Adapter {
     })
   }
 
-  async buildQuery(type) {
+  buildQuery(type) {
     return this.datastore.createQuery(type)
   }
 
