@@ -40,7 +40,7 @@ export class Adapter {
     return map[id]
   }
 
-  async create(type, path = null, data) {
+  async create(type, path, data) {
     return new Promise((resolve, reject) => {
       let key
 
@@ -48,7 +48,7 @@ export class Adapter {
         let finalPath
 
         if (path.length > 0) {
-          finalPath = path
+          finalPath = path[0]
         }
         else {
           finalPath = [type]
