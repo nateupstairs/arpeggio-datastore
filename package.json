@@ -1,6 +1,6 @@
 {
   "name": "arpeggio-datastore",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Arpeggio adapter for Google Cloud Datastore",
   "main": "lib/adapter.js",
   "repository": {
