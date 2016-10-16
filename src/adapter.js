@@ -12,13 +12,8 @@ export class Adapter {
     if (config.gcloud) {
       gcloud = config.gcloud
     }
-    else if (config.projectId) {
-      gcloud = require('google-cloud')({
-        projectId: config.projectId
-      })
-    }
     else {
-      throw new Error('cannot initialize')
+      gcloud = require('google-cloud')(config)
     }
     this.datastore = gcloud.datastore()
   }
