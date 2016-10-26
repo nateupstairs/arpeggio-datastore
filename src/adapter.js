@@ -125,17 +125,8 @@ export class Adapter {
     })
   }
 
-  async update(type, keyData, data) {
+  async update(type, key, data) {
     return new Promise((resolve, reject) => {
-      let key
-
-      try {
-        key = this.datastore.key(keyData.path)
-      }
-      catch (err) {
-        return reject(err)
-      }
-
       this.datastore.save({
         key: key,
         data: data
@@ -148,17 +139,8 @@ export class Adapter {
     })
   }
 
-  async destroy(type, keyData) {
+  async destroy(type, key) {
     return new Promise((resolve, reject) => {
-      let key
-
-      try {
-        key = this.datastore.key(keyData.path)
-      }
-      catch (err) {
-        return reject(err)
-      }
-
       this.datastore.delete(key, err => {
         if (err) {
           return reject(err)
@@ -168,29 +150,8 @@ export class Adapter {
     })
   }
 
-  async destroyMany(type, args) {
-    let readArgs = args
-
+  async destroyMany(type, keys) {
     return new Promise((resolve, reject) => {
-      let keys = []
-
-      try {
-        readArgs.forEach(ra => {
-          let key
-
-          if (_.isArray(ra)) {
-            key = this.datastore.key(ra)
-          }
-          else {
-            key = this.datastore.key([type, ra])
-          }
-          keys.push(key)
-        })
-      }
-      catch (err) {
-        return reject(err)
-      }
-
       this.datastore.delete(keys, (err, entities) => {
         if (err) {
           return reject(err)
