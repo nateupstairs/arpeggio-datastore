@@ -188,6 +188,9 @@ export class Adapter {
   }
   
   formatEntity(entity) {
+    if (!entity) {
+      return null
+    }
     return {
       data: entity,
       key: entity[this.datastore.KEY]
