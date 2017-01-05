@@ -21,7 +21,7 @@ export class Adapter {
   getKey(key) {
     return key.id
   }
-
+  
   mapIds(models) {
     let map = {}
 
@@ -88,7 +88,7 @@ export class Adapter {
         if (err) {
           return reject(err)
         }
-        return resolve(entity)
+        return resolve(this.formatEntity(entity))
       })
     })
   }
@@ -120,7 +120,7 @@ export class Adapter {
         if (err) {
           return reject(err)
         }
-        return resolve(entities)
+        return resolve(this.formatEntities(entities))
       })
     })
   }
@@ -176,7 +176,7 @@ export class Adapter {
           cursor = info.endCursor
         }
         return resolve({
-          results: entities,
+          results: this.formatEntities(entities),
           cursor: cursor
         })
       })
@@ -185,6 +185,22 @@ export class Adapter {
 
   buildQuery(type) {
     return this.datastore.createQuery(type)
+  }
+  
+  formatEntity(entity) {
+    return {
+      data: entity,
+      key: entity[this.datastore.KEY]
+    }
+  }
+
+  formatEntities(entities) {
+    let formattedEntities = []
+
+    entities.forEach(e => {
+      formattedEntities.push(this.formatEntity(e))
+    })
+    return formattedEntities
   }
 
 }
