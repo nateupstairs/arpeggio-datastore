@@ -165,7 +165,7 @@ export class Adapter {
     let builtQuery = args[0]
 
     return new Promise((resolve, reject) => {
-      builtQuery.run((err, entities, info) => {
+      this.datastore.runQuery(builtQuery, (err, entities, info) => {
         if (err) {
           return reject(err)
         }
