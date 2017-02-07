@@ -3,19 +3,20 @@
  */
 
 const _ = require('lodash')
+const datastore = require('@google-cloud/datastore')
 
 export class Adapter {
 
   constructor(config) {
-    let gcloud
+    let client
 
-    if (config.gcloud) {
-      gcloud = config.gcloud
+    if (config.client) {
+      client = config.client
     }
     else {
-      gcloud = require('google-cloud')(config)
+      client = datastore(config)
     }
-    this.datastore = gcloud.datastore()
+    this.datastore = client
   }
 
   getKey(key) {
